@@ -9,7 +9,7 @@ class Database
     {
         if (self::$connection === null) {
             $connectionParams = [
-                'dbname' => 'Pattern',
+                'dbname' => 'Shop',
                 'user' => 'root',
                 'password' => 'maikls123',
                 'host' => 'localhost',
