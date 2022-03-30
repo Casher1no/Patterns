@@ -41,6 +41,9 @@
     <li class="nav-item">
         <a class="nav-link active" aria-current="page" href="/add">Add Product</a>
     </li>
+    <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="/basket/{{ userId }}">Basket</a>
+    </li>
     <div class="btn-group">
         <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
             Products
@@ -56,7 +59,7 @@
 
 </ul>
 {% endif %}
-
+<div id="global-list">
 {% for product in products %}
 <div class="card">
     <img class="card-img-top">
@@ -65,11 +68,21 @@
         <h5 class="card-title">{{ product.name }}</h5>
         <p>{{ product.price }}$</p>
         <p>Products: {{ product.count }}</p>
-
+        {% if userName != null %}
+        <form method="post" action="/wish/{{ product.id }}">
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-default">Amount</span>
+                <input type="number" min="0" max="{{ product.count }}" class="form-control"
+                       aria-label="Sizing example input"
+                       aria-describedby="inputGroup-sizing-default" name="count" required>
+            </div>
+        <Button class="btn btn-info" role="button" type="submit">Add</Button>
+        </form>
+        {% endif %}
     </div>
 </div>
 {% endfor %}
-
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"

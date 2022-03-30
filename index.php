@@ -7,12 +7,16 @@ session_start();
 use App\Controller\LoginController;
 use App\Controller\LogoutController;
 use App\Controller\SignupController;
+use App\Repository\Basket\BasketRepository;
+use App\Repository\Basket\PdoBasketRepository;
 use App\Repository\Login\LoginRepository;
 use App\Repository\Login\PdoLoginRepository;
 use App\Repository\Products\InsertProduct\InsertRepository;
 use App\Repository\Products\InsertProduct\PdoInsertRepository;
 use App\Repository\Signup\PdoSignupRepository;
 use App\Repository\Signup\SignupRepository;
+use App\Repository\Wish\PdoWishRepository;
+use App\Repository\Wish\WishRepository;
 use App\View;
 use App\Redirect;
 use App\Controller\HomeController;
@@ -25,6 +29,9 @@ $builder->addDefinitions([
     //HomeController
     ProductRepository::class => DI\create(PdoProductRepository::class),
     InsertRepository::class => DI\create(PdoInsertRepository::class),
+    WishRepository::class => DI\create(PdoWishRepository::class),
+    BasketRepository::class => DI\create(PdoBasketRepository::class),
+
 
     //LoginController
     LoginRepository::class => DI\create(PdoLoginRepository::class),
@@ -41,6 +48,8 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) 
     $r->addRoute('GET', '/home/{product}', [HomeController::class, 'home']);
     $r->addRoute('GET', '/add', [HomeController::class, 'addProduct']);
     $r->addRoute('POST', '/add', [HomeController::class, 'insertProduct']);
+    $r->addRoute('POST', '/wish/{id:\d+}', [HomeController::class, 'wish']);
+    $r->addRoute('GET', '/basket/{id:\d+}', [HomeController::class, 'basket']);
 
     //Login
     $r->addRoute('GET', '/login', [LoginController::class, 'login']);
